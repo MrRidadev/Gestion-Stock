@@ -43,13 +43,13 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-<h1>List  Des Produits</h1>
+<h1>List Des Produits</h1>
 
 <table  class="table table-striped">
     <thead  class="thead">
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Name of the product</th>
+        <th scope="col">Nom du produit</th>
         <th scope="col">Quantité</th>
         <th scope="col">Prix</th>
         <th scope="col">Catégorie</th>
