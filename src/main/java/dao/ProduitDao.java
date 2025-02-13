@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Model.Produits;
@@ -78,6 +79,37 @@ public class ProduitDao {
     }
     	return rowUpdated;
 }
-    
+    // select produit by id
+    public Produits selectProduits(int id) {
+    	Produits produits = null;
+        // Step 1: Establishing a Connection
+        try (Connection connection = getConnection();
+            // Step 2:Create a statement using connection object
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUITS_BY_ID);) {
+            preparedStatement.setInt(1, id);
+            System.out.println(preparedStatement);
+            // Step 3: Execute the query or update query
+            ResultSet rs = preparedStatement.executeQuery();
+            
+         // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+                String NomProduit = rs.getString("NomProduit");
+                String Dscription = rs.getString("Dscription");
+                int Quantite = rs.getInt("Quantite");
+                int PrixUnitaire = rs.getInt("PrixUnitaire");
+                String Categorie = rs.getString("Categorie");
+                
+                produits = new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return produits;
+    }
+
+	private void printSQLException(SQLException e) {
+		// TODO Auto-generated method stub
+		
+	}
     
     }
