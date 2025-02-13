@@ -82,17 +82,45 @@ public class ProduitDao {
     // select produit by id
     public Produits selectProduits(int id) {
     	Produits produits = null;
-        // Step 1: Establishing a Connection
+        // Step 1: Établir une connexion
         try (Connection connection = getConnection();
-            // Step 2:Create a statement using connection object
+            // Step 2:Créer une déclaration à l'aide d'un objet de connexion
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUITS_BY_ID);) {
             preparedStatement.setInt(1, id);
             System.out.println(preparedStatement);
-            // Step 3: Execute the query or update query
+            // Step 3: Exécuter la requête ou la requête de mise à jour
             ResultSet rs = preparedStatement.executeQuery();
             
          // Step 4: Process the ResultSet object.
             while (rs.next()) {
+                String NomProduit = rs.getString("NomProduit");
+                String Dscription = rs.getString("Dscription");
+                int Quantite = rs.getInt("Quantite");
+                int PrixUnitaire = rs.getInt("PrixUnitaire");
+                String Categorie = rs.getString("Categorie");
+                
+                produits = new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return produits;
+    }
+    
+    //Select all Produit 
+    public Produits selectAllProduits() {
+    	Produits produits = null;
+        // Step 1: Établir une connexion
+        try (Connection connection = getConnection();
+            // Step 2:Créer une déclaration à l'aide d'un objet de connexion
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUITS_BY_ID);) {
+            System.out.println(preparedStatement);
+            // Step 3: Exécuter la requête ou la requête de mise à jour
+            ResultSet rs = preparedStatement.executeQuery();
+            
+         // Step 4: Process the ResultSet object.
+            while (rs.next()) {
+            	int id = rs.getInt("id");
                 String NomProduit = rs.getString("NomProduit");
                 String Dscription = rs.getString("Dscription");
                 int Quantite = rs.getInt("Quantite");
