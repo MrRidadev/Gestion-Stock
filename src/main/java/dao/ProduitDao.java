@@ -26,6 +26,7 @@ public class ProduitDao {
     
     private static final String UPDATE_PRODUIT = 
         "UPDATE Produits SET NomProduit = ?, Description = ?, Quantite = ?, PrixUnitaire = ?, Categorie = ? WHERE id = ?";
+	private static final String UPDATE_PRODUIT_SQL = null;
 
     // Constructeur
     public ProduitDao() {}
@@ -59,4 +60,24 @@ public class ProduitDao {
     }catch(Exception e) {
     	e.printStackTrace();
     }
-}}
+}
+    //update Produit
+    public boolean insertUpdate(Produits produits, boolean rowUpdated) throws SQLException {
+    	try(Connection connection = getConnection();
+    			PreparedStatement preparedStatement = connection.prepareStatement( UPDATE_PRODUIT_SQL )){
+    			
+    		preparedStatement.setString(1, produits.getNomProduit());
+    		preparedStatement.setString(2, produits.getDescription());
+    		preparedStatement.setInt(3, produits.getQuantite());
+    		preparedStatement.setInt(4, (int) produits.getPrixUnitaire());
+    		preparedStatement.setString(5, produits.getCategorie());
+    		preparedStatement.setInt(6, produits.getId());
+    		PreparedStatement statement = null;
+			rowUpdated = statement.executeUpdate() > 0;
+ 
+    }
+    	return rowUpdated;
+}
+    
+    
+    }
