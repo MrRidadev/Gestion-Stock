@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.Produits;
 
@@ -108,8 +110,8 @@ public class ProduitDao {
     }
     
     //Select all Produit 
-    public Produits selectAllProduits() {
-    	Produits produits = null;
+    public List<Produits> selectAllProduits() {
+    	List<Produits> produits = new ArrayList<>();
         // Step 1: Établir une connexion
         try (Connection connection = getConnection();
             // Step 2:Créer une déclaration à l'aide d'un objet de connexion
@@ -127,13 +129,15 @@ public class ProduitDao {
                 int PrixUnitaire = rs.getInt("PrixUnitaire");
                 String Categorie = rs.getString("Categorie");
                 
-                produits = new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie);
+                produits. add(new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie));
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
         return produits;
     }
+    
+    // delet Produits
 
 	private void printSQLException(SQLException e) {
 		// TODO Auto-generated method stub
