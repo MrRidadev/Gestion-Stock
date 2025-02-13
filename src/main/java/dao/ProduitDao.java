@@ -137,7 +137,15 @@ public class ProduitDao {
         return produits;
     }
     
-    // delet Produits
+    // delete Produits
+    public boolean deleteUser(int id) throws SQLException {
+        boolean rowDeleted;
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_PRODUIT_SQL);) {
+            statement.setInt(1, id);
+            rowDeleted = statement.executeUpdate() > 0;
+        }
+        return rowDeleted;
+    }
 
 	private void printSQLException(SQLException e) {
 		// TODO Auto-generated method stub
