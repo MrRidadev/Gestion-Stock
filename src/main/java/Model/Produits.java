@@ -1,6 +1,6 @@
 package Model;
 
-public class Produit {
+public class Produits {
     private int id;
     private String nomProduit;
     private String description;
@@ -9,10 +9,10 @@ public class Produit {
     private String categorie;
 
     // Constructeur 
-    public Produit() {}
+    public Produits() {}
 
     // Constructeur avec paramètres
-    public Produit(int id, String nomProduit, String description, int quantite, double prixUnitaire, String categorie) {
+    public Produits(int id, String nomProduit, String description, int quantite, double prixUnitaire, String categorie) {
         this.id = id;
         this.nomProduit = nomProduit;
         this.description = description;
