@@ -5,14 +5,14 @@ public class Produits {
     private String nomProduit;
     private String description;
     private int quantite;
-    private double prixUnitaire;
+    private int prixUnitaire;
     private String categorie;
 
     // Constructeur 
     public Produits() {}
 
     // Constructeur avec paramètres
-    public Produits(int id, String nomProduit, String description, int quantite, double prixUnitaire, String categorie) {
+    public Produits(int id, String nomProduit, String description, int quantite, int prixUnitaire, String categorie) {
         this.id = id;
         this.nomProduit = nomProduit;
         this.description = description;
@@ -58,7 +58,7 @@ public class Produits {
         return prixUnitaire;
     }
 
-    public void setPrixUnitaire(double prixUnitaire) {
+    public void setPrixUnitaire(int prixUnitaire) {
         this.prixUnitaire = prixUnitaire;
     }
 
