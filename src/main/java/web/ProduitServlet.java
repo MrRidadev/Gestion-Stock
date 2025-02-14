@@ -9,53 +9,77 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Model.Produits;
+import dao.ProduitDao;
+
 /**
  * Servlet implementation class ProduitServlet
  */
 @WebServlet("/")
 public class ProduitServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+    private ProduitDao produitDao;
+
     /**
-     * @see HttpServlet#HttpServlet()
+     * Constructeur : initialise le DAO
      */
     public ProduitServlet() {
-       
-    } 
+        this.produitDao = new ProduitDao();
+    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		String action = request.getServletPath();
+    /**
+     * Gère les requêtes GET
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        String action = request.getServletPath();
 
-      
-            switch (action) {
+        switch (action) {
+            case "/Ajouter":
+                ajouterProduit(request, response);
+                break;
+            default:
+                response.sendRedirect("index.jsp"); // Redirection vers la page principale
+                break;
+        }
+    }
 
-                case "/Ajouter":
-                    Ajouter(request, response);
-                    break;
-              
-               default :
+    /**
+     * Redirige vers le formulaire d'ajout de produit
+     */
+    private void ajouterProduit(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        request.getRequestDispatcher("form.jsp").forward(request, response);
+    }
 
-                    break;
-            }
-      
-		
-		
-	}
-	private void Ajouter(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException,IOException {
-		response.sendRedirect("form.jsp");
-		
-	}
+    /**
+     * Gère les requêtes POST pour ajouter un produit
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        // Récupération des données du formulaire
+        String nom = request.getParameter("nome");
+        String description = request.getParameter("desc");
+        int quantite = Integer.parseInt(request.getParameter("stock"));
+        int prixUnitaire = Integer.parseInt(request.getParameter("prix"));
+        String categorie = request.getParameter("inputCat");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
+        // Création d'un objet Produit
+        Produits produit = new Produits(0, nom, description, quantite, prixUnitaire, categorie);
 
+        try {
+            // Insertion dans la base de données via ProduitDao
+            produitDao.insertProduit(produit);
+            
+            // Redirection après l'ajout
+            response.sendRedirect("index.jsp");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServletException("Erreur lors de l'ajout du produit", e);
+        }
+    }
 }
