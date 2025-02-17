@@ -20,6 +20,15 @@ public class Produits {
         this.prixUnitaire = prixUnitaire;
         this.categorie = categorie;
     }
+    public Produits( String nomProduit, String description, int quantite, int prixUnitaire, String categorie) {
+        
+        this.nomProduit = nomProduit;
+        this.description = description;
+        this.quantite = quantite;
+        this.prixUnitaire = prixUnitaire;
+        this.categorie = categorie;
+    }
+    
 
     // Getters et Setters
     public int getId() {

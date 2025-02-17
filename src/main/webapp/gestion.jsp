@@ -27,33 +27,36 @@
     </tr>
     </thead>
     <tbody>
-     <c:forEach var="produit" items="${list}">
+     <c:forEach var="produit" items="${listProduit}">
                                 <tr>
                                     <td>
                                         <c:out value="${produit.id}" />
                                     </td>
                                     <td>
-                                        <c:out value="${produit.name}" />
+                                        <c:out value="${produit.nomProduit}" />
+                                    </td>
+                                    
+                                   <td> 
+                                        <c:out value="${produit.quantite}" />
                                     </td>
                                     <td>
-                                        <c:out value="${produit.description}" />
+                                        <c:out value="${produit.prixUnitaire}" />
+                                    </td>
+                                   <td>
+                                        <c:out value="${produit.categorie}" />
                                     </td>
                                     <td>
-                                        <c:out value="${produit.quantity}" />
+                                    <a herf="delete?id=<c:out value='${produit.id}' />" class="btn btn-danger" >Supprimer</a>
+                                    <a herf="delete?id=<c:out value='${produit.id}' />" class="btn btn-warning" >modifier</a>
+                                    
                                     </td>
-                                     <td>
-                                        <c:out value="${produit.price}" />
-                                    </td>
-                                     <td>
-                                        <c:out value="${produit.category}" />
-                                    </td>
-                                            <td><button class="btn btn-danger btn-sm" > <a style="color:white;" href="delete?id=<c:out value='${produit.id}' />">Delete</a></button>
-                                           <button class="btn btn-info btn-sm"><a style="color:white;" href="update?id=<c:out value='${produit.id}' />">Modifier</a></button>
-                                           </td>
                                           
                                
 
                                 </tr>
+                              
+                              
+                              
                             </c:forEach>
     </tbody>
 </table>

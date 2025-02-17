@@ -16,10 +16,10 @@ public class ProduitDao {
     private static final String JDBC_PASSWORD = "0000";
 
     private static final String INSERT_PRODUIT_SQL = 
-        "INSERT INTO Produits (id, NomProduit, Description, Quantite, PrixUnitaire, Categorie) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO Produits (NomProduit, Dscription, Quantité, PrixUnitaire, Catégorie) VALUES (?, ?, ?, ?, ?)";
     
     private static final String SELECT_PRODUITS_BY_ID = 
-        "SELECT id, NomProduit, Description, Quantite, PrixUnitaire, Categorie FROM Produits WHERE id = ?";
+        "SELECT id, NomProduit, Dscription, Quantité, PrixUnitaire, Catégorie FROM Produits WHERE id = ?";
     
     private static final String SELECT_ALL_PRODUITS = 
         "SELECT * FROM Produits";
@@ -28,7 +28,7 @@ public class ProduitDao {
         "DELETE FROM Produits WHERE id = ?";
     
     private static final String UPDATE_PRODUIT = 
-        "UPDATE Produits SET NomProduit = ?, Description = ?, Quantite = ?, PrixUnitaire = ?, Categorie = ? WHERE id = ?";
+        "UPDATE Produits SET NomProduit = ?, Dscription = ?, Quantité = ?, PrixUnitaire = ?, Catégorie = ? WHERE id = ?";
 	private static final String UPDATE_PRODUIT_SQL = null;
 
     // Constructeur
@@ -56,9 +56,9 @@ public class ProduitDao {
     		preparedStatement.setString(1, produits.getNomProduit());
     		preparedStatement.setString(2, produits.getDescription());
     		preparedStatement.setInt(3, produits.getQuantite());
-    		preparedStatement.setInt(4, (int) produits.getPrixUnitaire());
+    		preparedStatement.setDouble(4,produits.getPrixUnitaire());
     		preparedStatement.setString(5, produits.getCategorie());
-    		preparedStatement.executeLargeUpdate();
+    		preparedStatement.executeUpdate();
  
     }catch(Exception e) {
     	e.printStackTrace();
@@ -97,9 +97,9 @@ public class ProduitDao {
             while (rs.next()) {
                 String NomProduit = rs.getString("NomProduit");
                 String Dscription = rs.getString("Dscription");
-                int Quantite = rs.getInt("Quantite");
+                int Quantite = rs.getInt("Quantité");
                 int PrixUnitaire = rs.getInt("PrixUnitaire");
-                String Categorie = rs.getString("Categorie");
+                String Categorie = rs.getString("Catégorie");
                 
                 produits = new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie);
             }
@@ -111,11 +111,11 @@ public class ProduitDao {
     
     //Select all Produit 
     public List<Produits> selectAllProduits() {
-    	List<Produits> produits = new ArrayList<>();
+    	List<Produits> produitsAryy = new ArrayList<>();
         // Step 1: Établir une connexion
         try (Connection connection = getConnection();
             // Step 2:Créer une déclaration à l'aide d'un objet de connexion
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_PRODUITS_BY_ID);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUITS);) {
             System.out.println(preparedStatement);
             // Step 3: Exécuter la requête ou la requête de mise à jour
             ResultSet rs = preparedStatement.executeQuery();
@@ -125,16 +125,16 @@ public class ProduitDao {
             	int id = rs.getInt("id");
                 String NomProduit = rs.getString("NomProduit");
                 String Dscription = rs.getString("Dscription");
-                int Quantite = rs.getInt("Quantite");
+                int Quantite = rs.getInt("Quantité");
                 int PrixUnitaire = rs.getInt("PrixUnitaire");
-                String Categorie = rs.getString("Categorie");
+                String Categorie = rs.getString("Catégorie");
                 
-                produits. add(new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie));
+                produitsAryy.add(new Produits(id, NomProduit, Dscription, Quantite,PrixUnitaire,Categorie));
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
-        return produits;
+        return produitsAryy;
     }
     
     // delete Produits
